@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Workforce Segmentation & Clustering Dashboard | Week 3</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js & Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div>
+                    <h1>HR Workforce Segmentation Dashboard</h1>
+                    <p class="subtitle">Unsupervised K-Means Clustering & Persona Risk Profiling • Week 3</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="badge-status">
+                    <span class="status-dot"></span> K-Means Model: Active (k=3)
+                </div>
+                <div class="badge-tag">
+                    <i class="fa-solid fa-[#6366f1] fa-microchip"></i> StandardScaler Normalization
+                </div>
+            </div>
+        </header>
+
+        <!-- KPI Cards Grid -->
+        <section class="kpi-grid">
+            <div class="kpi-card highlight-purple">
+                <div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Total Workforce</span>
+                    <span class="kpi-value">1,473</span>
+                    <span class="kpi-subtext">Cleaned Dataset Scope</span>
+                </div>
+            </div>
+
+            <div class="kpi-card highlight-red">
+                <div class="kpi-icon"><i class="fa-solid fa-seedling"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Junior Core Persona</span>
+                    <span class="kpi-value">740 <small>(50.2%)</small></span>
+                    <span class="kpi-badge alert-red"><i class="fa-solid fa-triangle-exclamation"></i> 22.6% Turnover</span>
+                </div>
+            </div>
+
+            <div class="kpi-card highlight-blue">
+                <div class="kpi-icon"><i class="fa-solid fa-briefcase"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Mid-Level Professionals</span>
+                    <span class="kpi-value">511 <small>(34.7%)</small></span>
+                    <span class="kpi-badge alert-blue">10.8% Turnover</span>
+                </div>
+            </div>
+
+            <div class="kpi-card highlight-emerald">
+                <div class="kpi-icon"><i class="fa-solid fa-user-tie"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Senior Leadership</span>
+                    <span class="kpi-value">222 <small>(15.1%)</small></span>
+                    <span class="kpi-badge alert-green">6.8% Turnover</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Charts Section -->
+        <main class="charts-grid">
+            <!-- Elbow Method Curve -->
+            <div class="chart-card flex-col">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-chart-line text-purple"></i>
+                        <h3>Elbow Method (WCSS vs. Number of Clusters)</h3>
+                    </div>
+                    <span class="card-tooltip" title="Within-Cluster Sum of Squares inflection point occurs at k=3">k=3 Inflection</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="elbowChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 2D PCA Cluster Scatter Plot -->
+            <div class="chart-card flex-col">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-circle-nodes text-blue"></i>
+                        <h3>2D PCA Projection of Employee Personas</h3>
+                    </div>
+                    <div class="filter-group">
+                        <select id="pcaHueSelect" class="styled-select">
+                            <option value="Persona">Color by Persona</option>
+                            <option value="Attrition">Color by Attrition</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="pcaScatterChart"></canvas>
+                </div>
+            </div>
+        </main>
+
+        <!-- Row 2: Persona Profiles & Attrition Breakdown -->
+        <section class="secondary-grid">
+            <!-- Persona Breakdown Profile Cards -->
+            <div class="personas-card-wrapper">
+                <h3 class="section-title"><i class="fa-solid fa-address-card"></i> Employee Persona Strategic Profiles</h3>
+                
+                <div class="persona-cards-container">
+                    <div class="persona-item border-red">
+                        <div class="persona-header">
+                            <span class="persona-pill tag-red">Cluster 0</span>
+                            <h4>Junior Core</h4>
+                        </div>
+                        <div class="persona-stats">
+                            <div><span class="stat-lbl">Avg Income:</span> <strong>$3,767</strong></div>
+                            <div><span class="stat-lbl">Avg Experience:</span> <strong>6.2 Yrs</strong></div>
+                            <div><span class="stat-lbl">Company Tenure:</span> <strong>3.4 Yrs</strong></div>
+                            <div><span class="stat-lbl">Avg Age:</span> <strong>32.5 Yrs</strong></div>
+                        </div>
+                        <div class="persona-recommendation">
+                            <i class="fa-solid fa-lightbulb"></i> <strong>Retention Strategy:</strong> Accelerate early promotion tracks and skill development to mitigate flight risk.
+                        </div>
+                    </div>
+
+                    <div class="persona-item border-blue">
+                        <div class="persona-header">
+                            <span class="persona-pill tag-blue">Cluster 1</span>
+                            <h4>Mid-Level Professionals</h4>
+                        </div>
+                        <div class="persona-stats">
+                            <div><span class="stat-lbl">Avg Income:</span> <strong>$6,543</strong></div>
+                            <div><span class="stat-lbl">Avg Experience:</span> <strong>12.4 Yrs</strong></div>
+                            <div><span class="stat-lbl">Company Tenure:</span> <strong>9.0 Yrs</strong></div>
+                            <div><span class="stat-lbl">Avg Age:</span> <strong>38.7 Yrs</strong></div>
+                        </div>
+                        <div class="persona-recommendation">
+                            <i class="fa-solid fa-lightbulb"></i> <strong>Retention Strategy:</strong> Provide leadership programs, hybrid flexibility, and equity grants.
+                        </div>
+                    </div>
+
+                    <div class="persona-item border-green">
+                        <div class="persona-header">
+                            <span class="persona-pill tag-green">Cluster 2</span>
+                            <h4>Senior Leadership</h4>
+                        </div>
+                        <div class="persona-stats">
+                            <div><span class="stat-lbl">Avg Income:</span> <strong>$14,581</strong></div>
+                            <div><span class="stat-lbl">Avg Experience:</span> <strong>25.7 Yrs</strong></div>
+                            <div><span class="stat-lbl">Company Tenure:</span> <strong>14.5 Yrs</strong></div>
+                            <div><span class="stat-lbl">Avg Age:</span> <strong>49.1 Yrs</strong></div>
+                        </div>
+                        <div class="persona-recommendation">
+                            <i class="fa-solid fa-lightbulb"></i> <strong>Retention Strategy:</strong> Custom executive packages and mentorship pairing with Cluster A talent.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attrition Rate Bar Chart -->
+            <div class="chart-card flex-col">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-chart-bar text-red"></i>
+                        <h3>Attrition Rate by Persona (%)</h3>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="attritionPersonaChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Data Table Section -->
+        <section class="table-card">
+            <div class="table-header">
+                <h3><i class="fa-solid fa-table-list"></i> Clustered Workforce Directory</h3>
+                <div class="table-controls">
+                    <select id="personaFilter" class="styled-select">
+                        <option value="ALL">All Personas</option>
+                        <option value="Junior Core">Junior Core</option>
+                        <option value="Mid-Level Professionals">Mid-Level Professionals</option>
+                        <option value="Senior Leadership">Senior Leadership</option>
+                    </select>
+                    <select id="attritionFilter" class="styled-select">
+                        <option value="ALL">All Attrition Status</option>
+                        <option value="Yes">Departed (Yes)</option>
+                        <option value="No">Retained (No)</option>
+                    </select>
+                    <input type="text" id="searchInput" placeholder="Search role, dept..." class="styled-input">
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table id="employeeTable">
+                    <thead>
+                        <tr>
+                            <th>Persona</th>
+                            <th>Age</th>
+                            <th>Department</th>
+                            <th>Job Role</th>
+                            <th>Monthly Income</th>
+                            <th>Total Experience</th>
+                            <th>Tenure</th>
+                            <th>Attrition</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
