@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Analytics Executive Master Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo-icon">HR</div>
+        <div class="brand-title">
+          <h1>Workforce Attrition Executive Master Dashboard</h1>
+          <p>Multi-Dimensional Visual Analytics & Tableau Business Intelligence Suite</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span class="badge-tableau">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          Tableau .TWB Master Ready
+        </span>
+        <a href="HR_Analytics_Cleaned.csv" download class="btn-primary" style="text-decoration: none;">Download Clean CSV</a>
+      </div>
+    </header>
+
+    <!-- Global Filters -->
+    <div class="filter-ribbon">
+      <div class="filter-group">
+        <label>Department</label>
+        <select id="filterDept">
+          <option value="all">All Departments</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Job Role</label>
+        <select id="filterRole">
+          <option value="all">All Job Roles</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Education Field</label>
+        <select id="filterEdu">
+          <option value="all">All Education Fields</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Gender</label>
+        <select id="filterGender">
+          <option value="all">All Genders</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>OverTime</label>
+        <select id="filterOT">
+          <option value="all">All Overtime Status</option>
+          <option value="Yes">Overtime Required (Yes)</option>
+          <option value="No">No Overtime (No)</option>
+        </select>
+      </div>
+      <button id="btnReset" class="btn-reset">Reset All Filters</button>
+    </div>
+
+    <!-- KPI Scorecard Ribbon -->
+    <div class="kpi-grid">
+      <div class="kpi-card cyan">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Workforce</span>
+          <div class="kpi-icon">👥</div>
+        </div>
+        <div class="kpi-value" id="kpiTotal">1,473</div>
+        <div class="kpi-subtext">Active & Past Records</div>
+      </div>
+
+      <div class="kpi-card rose">
+        <div class="kpi-header">
+          <span class="kpi-title">Attrition Rate</span>
+          <div class="kpi-icon">⚠️</div>
+        </div>
+        <div class="kpi-value" id="kpiAttritionRate">16.1%</div>
+        <div class="kpi-subtext" id="kpiAttritionSub">237 Employees Departed</div>
+      </div>
+
+      <div class="kpi-card emerald">
+        <div class="kpi-header">
+          <span class="kpi-title">Avg Monthly Income</span>
+          <div class="kpi-icon">💵</div>
+        </div>
+        <div class="kpi-value" id="kpiAvgSalary">$6,360</div>
+        <div class="kpi-subtext">IQR Capped Benchmark</div>
+      </div>
+
+      <div class="kpi-card purple">
+        <div class="kpi-header">
+          <span class="kpi-title">Avg Workforce Age</span>
+          <div class="kpi-icon">🎂</div>
+        </div>
+        <div class="kpi-value" id="kpiAvgAge">36.9 Yrs</div>
+        <div class="kpi-subtext">Core Cohort: 26-45 Yrs</div>
+      </div>
+
+      <div class="kpi-card amber">
+        <div class="kpi-header">
+          <span class="kpi-title">Avg Company Tenure</span>
+          <div class="kpi-icon">🏛️</div>
+        </div>
+        <div class="kpi-value" id="kpiAvgTenure">7.0 Yrs</div>
+        <div class="kpi-subtext">Imputed Manager Tenure: 4.1 Yrs</div>
+      </div>
+
+      <div class="kpi-card rose">
+        <div class="kpi-header">
+          <span class="kpi-title">Overtime Risk Rate</span>
+          <div class="kpi-icon">🔥</div>
+        </div>
+        <div class="kpi-value" id="kpiOTRisk">30.5%</div>
+        <div class="kpi-subtext">Attrition among Overtime Cohort</div>
+      </div>
+    </div>
+
+    <!-- Master Charts Grid -->
+    <div class="charts-grid">
+      <!-- Chart 1: Department & Job Role (Bar Chart) -->
+      <div class="chart-card col-span-8">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Department & Role Attrition Distribution (Bar Chart)</h3>
+            <p>Compare turnover counts across Sales, Research & Development, and HR roles</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartDeptRole"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Education Field (Pie Chart) -->
+      <div class="chart-card col-span-4">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Education Field Breakdown (Pie Chart)</h3>
+            <p>Attrition distribution by academic field</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartEduPie"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 3: OverTime Risk (Donut Chart) -->
+      <div class="chart-card col-span-4">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Overtime Work Risk Factor (Donut Chart)</h3>
+            <p>Mandated overtime vs non-overtime turnover</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartOvertime"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 4: Marital Status (Pie Chart) -->
+      <div class="chart-card col-span-4">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Marital Status Breakdown (Pie Chart)</h3>
+            <p>Single vs Married vs Divorced departure rates</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartMaritalPie"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 5: Business Travel Risk (Pie Chart) -->
+      <div class="chart-card col-span-4">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Business Travel Frequency (Pie Chart)</h3>
+            <p>Travel Frequency impact on turnover</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartTravelPie"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 6: Income Slabs (Horizontal Bar) -->
+      <div class="chart-card col-span-6">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Compensation Slabs vs Attrition (Bar Chart)</h3>
+            <p>Turnover percentage across monthly income brackets</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartIncome"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 7: Age Group Distribution (Bar Chart) -->
+      <div class="chart-card col-span-6">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Age Group Distribution (Bar Chart)</h3>
+            <p>Attrition breakdown across employee age brackets</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartAgeBar"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 8: Company Tenure Group (Bar Chart) -->
+      <div class="chart-card col-span-6">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Company Tenure Groups (Bar Chart)</h3>
+            <p>Years at company vs departure percentage</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartTenureBar"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 9: Satisfaction Matrix (Radar Chart) -->
+      <div class="chart-card col-span-6">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Satisfaction & Work-Life Matrix</h3>
+            <p>Comparing Environment Satisfaction vs Work-Life Balance scores</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartSatisfaction"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Executive Insights Panel -->
+    <div class="summary-panel">
+      <h3>📌 Strategic Insights & Notebook Preprocessing Findings</h3>
+      <div class="summary-bullets">
+        <div class="summary-item">
+          <h4>1. Median Imputation on Manager Tenure</h4>
+          <p>57 missing values in <code>YearsWithCurrManager</code> were resolved using median imputation (3.0 years), preserving nearly 4% of the dataset without introducing extreme TENURE bias.</p>
+        </div>
+        <div class="summary-item">
+          <h4>2. IQR Compensation Outlier Capping</h4>
+          <p>Executive salaries up to $19,999 were capped at the upper IQR bound ($16,583.50), stabilizing model variance while maintaining rank order.</p>
+        </div>
+        <div class="summary-item">
+          <h4>3. Overtime & Sales Department Vulnerability</h4>
+          <p>Overtime employees experience a 30.5% attrition rate compared to ~10% for non-overtime staff. Sales Executives & Lab Techs show the highest absolute turnover count.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Explorer Table -->
+    <div class="data-section">
+      <div class="table-header">
+        <div class="chart-title">
+          <h3>Employee Master Dataset Explorer</h3>
+          <p>Sanitized & Preprocessed Data Records ready for Tableau</p>
+        </div>
+        <input type="text" id="searchTable" class="search-input" placeholder="Search role, dept, gender, edu...">
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Job Role</th>
+              <th>Department</th>
+              <th>Education Field</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Monthly Income</th>
+              <th>Years at Co.</th>
+              <th>OverTime</th>
+              <th>Attrition Status</th>
+            </tr>
+          </thead>
+          <tbody id="employeeTableBody">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <span id="tableCount">Showing records</span>
+        <span>Connected to <code>HR_Analytics_Cleaned.csv</code></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
