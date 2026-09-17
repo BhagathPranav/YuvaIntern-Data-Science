@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 2: HR Attrition Exploratory Data Analysis (EDA) Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo-icon">W2</div>
+        <div class="brand-title">
+          <h1>Week 2: HR Attrition Exploratory Data Analysis (EDA)</h1>
+          <p>Univariate, Bivariate & Correlation Diagnostics (Loyalty Penalty & Class Imbalance)</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span class="badge-tableau">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          Tableau EDA Packaged
+        </span>
+        <a href="HR_Analytics_EDA_Dashboard.twbx" download class="btn-primary" style="text-decoration: none;">Download TWBX</a>
+      </div>
+    </header>
+
+    <!-- Filter Ribbon -->
+    <div class="filter-ribbon">
+      <div class="filter-group">
+        <label>Department</label>
+        <select id="filterDept">
+          <option value="all">All Departments</option>
+          <option value="Sales">Sales</option>
+          <option value="Research & Development">Research & Development</option>
+          <option value="Human Resources">Human Resources</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Job Role</label>
+        <select id="filterRole">
+          <option value="all">All Job Roles</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>OverTime</label>
+        <select id="filterOT">
+          <option value="all">All Overtime Status</option>
+          <option value="Yes">Overtime (Yes)</option>
+          <option value="No">No Overtime (No)</option>
+        </select>
+      </div>
+      <button id="btnReset" class="btn-reset">Reset Filters</button>
+    </div>
+
+    <!-- KPI Diagnostics Scorecard -->
+    <div class="kpi-grid">
+      <div class="kpi-card rose">
+        <div class="kpi-header">
+          <span class="kpi-title">Class Imbalance</span>
+          <div class="kpi-icon">⚠️</div>
+        </div>
+        <div class="kpi-value" id="kpiClassImbalance">16.1%</div>
+        <div class="kpi-subtext">237 Attrition / 1,236 Retained</div>
+      </div>
+
+      <div class="kpi-card amber">
+        <div class="kpi-header">
+          <span class="kpi-title">Loyalty Penalty Gap</span>
+          <div class="kpi-icon">📉</div>
+        </div>
+        <div class="kpi-value" id="kpiLoyaltyGap">+0.258</div>
+        <div class="kpi-subtext">Total Yrs Corr (0.77) vs Co. Yrs (0.51)</div>
+      </div>
+
+      <div class="kpi-card cyan">
+        <div class="kpi-header">
+          <span class="kpi-title">Sales Dept Attrition</span>
+          <div class="kpi-icon">🔥</div>
+        </div>
+        <div class="kpi-value" id="kpiSalesRate">20.6%</div>
+        <div class="kpi-subtext">Highest Department Turnover</div>
+      </div>
+
+      <div class="kpi-card emerald">
+        <div class="kpi-header">
+          <span class="kpi-title">Median Salary Pay Gap</span>
+          <div class="kpi-icon">💵</div>
+        </div>
+        <div class="kpi-value" id="kpiSalaryGap">$2,130</div>
+        <div class="kpi-subtext">Retained vs Departed Median Income</div>
+      </div>
+    </div>
+
+    <!-- Main EDA Charts Grid -->
+    <div class="charts-grid">
+      <!-- Loyalty Penalty Scatter Plot -->
+      <div class="chart-card col-span-8">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Loyalty Penalty Scatter: Working Years vs Monthly Income</h3>
+            <p>Demonstrating how internal tenure lags total industry experience salary growth</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartLoyaltyScatter"></canvas>
+        </div>
+      </div>
+
+      <!-- Class Imbalance Donut -->
+      <div class="chart-card col-span-4">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Class Imbalance Ratio</h3>
+            <p>16.1% Attrition vs 83.9% Retained Workforce</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartClassImbalance"></canvas>
+        </div>
+      </div>
+
+      <!-- Correlation Heatmap Grid -->
+      <div class="chart-card col-span-12">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Multivariate Feature Correlation Matrix</h3>
+            <p>Pairwise Pearson correlations highlighting salary, tenure, and promotion dynamics</p>
+          </div>
+        </div>
+        <div class="heatmap-container" id="heatmapGrid">
+          <!-- Dynamic Heatmap Grid -->
+        </div>
+      </div>
+
+      <!-- Bivariate Income Boxplot Simulation -->
+      <div class="chart-card col-span-6">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Bivariate Monthly Income: Retained vs Departed</h3>
+            <p>Departed employees show lower median pay and tighter interquartile range</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartIncomeBox"></canvas>
+        </div>
+      </div>
+
+      <!-- Department Attrition Bar -->
+      <div class="chart-card col-span-6">
+        <div class="chart-header">
+          <div class="chart-title">
+            <h3>Departmental Turnover Rate (%)</h3>
+            <p>Sales department exhibits significantly higher departure proportion</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartDeptBar"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategic Takeaways -->
+    <div class="summary-panel">
+      <h3>📌 Strategic Insights & EDA Report Conclusions</h3>
+      <div class="summary-bullets">
+        <div class="summary-item">
+          <h4>1. The Loyalty Penalty Gap</h4>
+          <p>Monthly Income correlates strongly with Total Working Years (0.77), but noticeably weaker with Years at Company (0.51). Internal wage growth lags external market rates, incentivizing senior staff to jump companies to secure market pay.</p>
+        </div>
+        <div class="summary-item">
+          <h4>2. Class Imbalance Impact on ML Modeling</h4>
+          <p>With only 16.1% attrition, standard accuracy metrics will be misleading. Future predictive classification models must evaluate Precision, Recall, PR-AUC, and F1-score.</p>
+        </div>
+        <div class="summary-item">
+          <h4>3. Compensation & Sales Role Interventions</h4>
+          <p>Sales staff and lower-income cohorts (<$5,000/mo) represent 70%+ of total departures. HR leadership must conduct internal pay equity audits and restructure sales incentives.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
