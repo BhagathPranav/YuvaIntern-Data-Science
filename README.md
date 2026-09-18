@@ -35,19 +35,33 @@ Repository for Yuva Internship Data Science projects and tasks.
 │   ├── create_notebook.py                  # Jupyter Notebook Builder Script
 │   └── create_tableau_eda_workbook.py      # Tableau EDA XML & TWBX Builder Script
 │
-└── Week_3_Data_Cleaning/
-    ├── HR_Clustering_Analysis.docx         # Executive Report on Unsupervised Clustering & Workforce Personas
-    ├── notebook_Week3_Clustering.ipynb     # Jupyter Notebook documenting StandardScaler, Elbow Curve, 2D PCA & Cluster Profiles
-    ├── clustering_analysis.py              # Automated Python Script executing K-Means Clustering & Exporting Clustered Dataset
-    ├── clustering_summary.json             # WCSS, Silhouette Scores & Persona Metrics for Web Visualizations
-    ├── HR_Analytics_Clustered.csv          # Preprocessed Dataset with Assigned Clusters, Personas & 2D PCA Coordinates
-    ├── HR_Analytics_Clustering_Dashboard.twb  # Native Tableau Clustering Workbook XML
-    ├── HR_Analytics_Clustering_Dashboard.twbx # Packaged Tableau Clustering Workbook (Embedded Data)
-    ├── index.html                          # Interactive Glassmorphism Web Clustering Dashboard
-    ├── styles.css                          # Cyberpunk Glassmorphism Dark Mode Styling
-    ├── app.js                              # Interactive Chart.js Elbow Curve, 2D PCA Scatter Plot & Directory Filters
+├── Week_3_Data_Cleaning/
+│   ├── HR_Clustering_Analysis.docx         # Executive Report on Unsupervised Clustering & Workforce Personas
+│   ├── notebook_Week3_Clustering.ipynb     # Jupyter Notebook documenting StandardScaler, Elbow Curve, 2D PCA & Cluster Profiles
+│   ├── clustering_analysis.py              # Automated Python Script executing K-Means Clustering & Exporting Clustered Dataset
+│   ├── clustering_summary.json             # WCSS, Silhouette Scores & Persona Metrics for Web Visualizations
+│   ├── HR_Analytics_Clustered.csv          # Preprocessed Dataset with Assigned Clusters, Personas & 2D PCA Coordinates
+│   ├── HR_Analytics_Clustering_Dashboard.twb  # Native Tableau Clustering Workbook XML
+│   ├── HR_Analytics_Clustering_Dashboard.twbx # Packaged Tableau Clustering Workbook (Embedded Data)
+│   ├── index.html                          # Interactive Glassmorphism Web Clustering Dashboard
+│   ├── styles.css                          # Cyberpunk Glassmorphism Dark Mode Styling
+│   ├── app.js                              # Interactive Chart.js Elbow Curve, 2D PCA Scatter Plot & Directory Filters
+│   ├── create_notebook.py                  # Generator Script for Jupyter Notebook
+│   └── create_tableau_clustering_workbook.py # Builder Script for Tableau XML & TWBX Workbooks
+│
+└── Week_4_Data_Supervised/
+    ├── HR_Supervised_Learning_Final.docx   # Executive Report on Supervised Attrition Classification & Algorithm Benchmarking
+    ├── notebook_Week4_Supervised.ipynb     # Jupyter Notebook documenting Feature Engineering, Train/Test Split, 5-Fold CV & ROC Curves
+    ├── supervised_analysis.py              # Automated Python ML Script executing Classification Pipeline & Metrics Export
+    ├── supervised_summary.json             # Model Metrics, Confusion Matrices, ROC Data & Top Drivers for Web Dashboard
+    ├── HR_Analytics_Supervised.csv         # Enriched Dataset with Predicted Flight Risk Scores & Risk Categories
+    ├── HR_Analytics_Supervised_Dashboard.twb  # Native Tableau Supervised Learning Workbook XML
+    ├── HR_Analytics_Supervised_Dashboard.twbx # Packaged Tableau Supervised Learning Workbook (Embedded Data)
+    ├── index.html                          # Interactive Executive Cyberpunk Web Dashboard & Real-Time Flight Risk Simulator
+    ├── styles.css                          # Cyberpunk Glassmorphism Dark Theme Styling
+    ├── app.js                              # Chart.js Visualizations, Confusion Matrix Renderers & Interactive Simulator Logic
     ├── create_notebook.py                  # Generator Script for Jupyter Notebook
-    └── create_tableau_clustering_workbook.py # Builder Script for Tableau XML & TWBX Workbooks
+    └── create_tableau_supervised_workbook.py # Builder Script for Tableau XML & TWBX Workbooks
 ```
 
 ## 🚀 Tasks Overview
@@ -74,5 +88,17 @@ Repository for Yuva Internship Data Science projects and tasks.
   - **Cluster 2 (Senior Leadership)**: 222 employees (15.1%), avg income $14,581, avg experience 25.7 yrs, turnover rate **6.8%**.
 - **Dimensionality Reduction**: Applied 2D Principal Component Analysis (PCA) to map cluster separation.
 - **Multi-Platform Visualizations**: Generated Jupyter Notebook (`notebook_Week3_Clustering.ipynb`), Tableau Packaged Dashboard (`HR_Analytics_Clustering_Dashboard.twbx`), and interactive Web Clustering Dashboard (`index.html`).
+
+### Week 4: Supervised Learning — Predicting Employee Attrition & Early Warning System
+- **Feature Engineering & One-Hot Encoding**: Transformed categorical features with `drop_first=True`, expanding the dataset to **45 mathematical features**.
+- **Data Partitioning & Data Leakage Prevention**: Split into an 80/20 train-test split (`stratify=y`) and fit `StandardScaler` strictly on the training set.
+- **Class Imbalance Mitigation (`class_weight='balanced'`)**: Applied inverse class weighting to penalize False Negatives on the 84/16 imbalanced target.
+- **5-Fold Stratified Cross-Validation**:
+  - **Logistic Regression (Parametric Benchmark)**: 5-Fold CV ROC-AUC of **0.7979**, Test ROC-AUC of **0.8854**, test set **Recall of 83%** (catches 39 out of 47 departing employees).
+  - **Random Forest Classifier (Ensemble Method)**: 5-Fold CV ROC-AUC of **0.7796**, Test ROC-AUC of **0.8341**, test set **Precision of 70%** (16 True Positives, 7 False Positives).
+- **Model Selection Verdict**: Selected Logistic Regression as the optimal early warning estimator because in HR attrition, a **False Negative** (losing an employee without intervention) is vastly more costly than a **False Positive** (a stay interview or bonus given to an employee planning to stay).
+- **Interactive Web Flight Risk Simulator**: Built a dynamic real-time web flight risk calculator for HR managers to simulate flight risk scores and receive automated retention recommendations.
+- **Multi-Platform Visualizations**: Generated Jupyter Notebook (`notebook_Week4_Supervised.ipynb`), Tableau Packaged Dashboard (`HR_Analytics_Supervised_Dashboard.twbx`), and interactive Web Dashboard (`index.html`).
+
 
 

@@ -1,0 +1,120 @@
+<?xml class='1.0' encoding='utf-8' ?>
+<workbook original-version='18.1' source-build='2023.1.0' source-platform='mac' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='HR Analytics Supervised' inline='true' name='federated.hr_supervised' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='HR_Analytics_Supervised' name='textscan.hr_supervised'>
+            <connection class='textscan' directory='.' filename='HR_Analytics_Supervised.csv' password='' server='' />
+          </named-connection>
+        </named-connections>
+      </connection>
+      <column datatype='string' name='[Attrition]' role='dimension' type='nominal' />
+      <column datatype='string' name='[Risk_Category]' role='dimension' type='nominal' />
+      <column datatype='integer' name='[Predicted_Attrition_LR]' role='dimension' type='ordinal' />
+      <column datatype='string' name='[Department]' role='dimension' type='nominal' />
+      <column datatype='string' name='[JobRole]' role='dimension' type='nominal' />
+      <column datatype='string' name='[OverTime]' role='dimension' type='nominal' />
+      <column datatype='real' name='[FlightRiskScore_LR]' role='measure' type='quantitative' />
+      <column datatype='real' name='[FlightRiskScore_RF]' role='measure' type='quantitative' />
+      <column datatype='integer' name='[MonthlyIncome]' role='measure' type='quantitative' />
+      <column datatype='integer' name='[Age]' role='measure' type='quantitative' />
+      <column datatype='integer' name='[YearsAtCompany]' role='measure' type='quantitative' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.5' measure-ordering='alphabetic' measure-percentage='0.5' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Logistic Regression Flight Risk Score'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='HR Analytics Supervised' name='federated.hr_supervised' />
+          </datasources>
+          <datasource-dependencies datasource='federated.hr_supervised'>
+            <column datatype='string' name='[Department]' role='dimension' type='nominal' />
+            <column datatype='real' name='[FlightRiskScore_LR]' role='measure' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane>
+            <slice>
+              <strip size='160'>
+                <card type='rows' />
+                <card type='cols' />
+              </strip>
+            </slice>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows>[federated.hr_supervised].[none:Department:nk]</rows>
+        <cols>[federated.hr_supervised].[avg:FlightRiskScore_LR:ql]</cols>
+      </table>
+    </worksheet>
+
+    <worksheet name='Risk Category Distribution'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='HR Analytics Supervised' name='federated.hr_supervised' />
+          </datasources>
+          <datasource-dependencies datasource='federated.hr_supervised'>
+            <column datatype='string' name='[Risk_Category]' role='dimension' type='nominal' />
+            <column datatype='string' name='[Attrition]' role='dimension' type='nominal' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane>
+            <slice>
+              <strip size='160'>
+                <card type='rows' />
+                <card type='cols' />
+              </strip>
+            </slice>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows>[federated.hr_supervised].[none:Risk_Category:nk]</rows>
+        <cols>[federated.hr_supervised].[none:Attrition:nk]</cols>
+      </table>
+    </worksheet>
+  </worksheets>
+
+  <dashboards>
+    <dashboard name='HR Supervised Learning Executive Dashboard'>
+      <style />
+      <size maxheight='900' maxwidth='1400' minheight='700' minwidth='1000' />
+      <zones>
+        <zone h='100000' id='1' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98000' id='2' param='vert' type-v2='layout-flow' w='98000' x='1000' y='1000'>
+            <zone h='10000' id='3' type-v2='text' w='98000' x='1000' y='1000'>
+              <formatted-text>
+                <run bold='true' fontcolor='#111827' fontsize='18'>HR Supervised Learning &amp; Flight Risk Predictive Dashboard</run>
+              </formatted-text>
+            </zone>
+            <zone h='88000' id='4' param='horz' type-v2='layout-flow' w='98000' x='1000' y='11000'>
+              <zone h='88000' id='5' name='Logistic Regression Flight Risk Score' w='49000' x='1000' y='11000' />
+              <zone h='88000' id='6' name='Risk Category Distribution' w='49000' x='50000' y='11000' />
+            </zone>
+          </zone>
+        </zone>
+      </zones>
+    </dashboard>
+  </dashboards>
+
+  <windows>
+    <window class='dashboard' name='HR Supervised Learning Executive Dashboard'>
+      <active pane-at-count='1' />
+    </window>
+  </windows>
+</workbook>

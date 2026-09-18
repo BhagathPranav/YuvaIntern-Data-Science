@@ -1,0 +1,430 @@
+{
+  "dataset_summary": {
+    "total_records": 1473,
+    "attrition_count": 237,
+    "attrition_rate": 16.09,
+    "feature_count": 45,
+    "train_samples": 1178,
+    "test_samples": 295
+  },
+  "logistic_regression": {
+    "model_name": "Logistic Regression (Parametric Benchmark)",
+    "cv_roc_auc_mean": 0.7979,
+    "cv_roc_auc_std": 0.0254,
+    "test_roc_auc": 0.8854,
+    "confusion_matrix": {
+      "true_negatives": 185,
+      "false_positives": 63,
+      "false_negatives": 8,
+      "true_positives": 39
+    },
+    "metrics": {
+      "precision": 0.3824,
+      "recall": 0.8298,
+      "f1_score": 0.5235,
+      "accuracy": 0.7593
+    },
+    "top_drivers": [
+      {
+        "feature": "OverTime_Yes",
+        "coefficient": 0.7866
+      },
+      {
+        "feature": "BusinessTravel_Travel_Frequently",
+        "coefficient": 0.6505
+      },
+      {
+        "feature": "YearsAtCompany",
+        "coefficient": 0.6265
+      },
+      {
+        "feature": "JobRole_Laboratory Technician",
+        "coefficient": 0.6048
+      },
+      {
+        "feature": "Department_Sales",
+        "coefficient": 0.5848
+      },
+      {
+        "feature": "YearsSinceLastPromotion",
+        "coefficient": 0.5275
+      },
+      {
+        "feature": "MaritalStatus_Single",
+        "coefficient": 0.5238
+      },
+      {
+        "feature": "JobRole_Sales Representative",
+        "coefficient": 0.4445
+      },
+      {
+        "feature": "BusinessTravel_Travel_Rarely",
+        "coefficient": 0.4438
+      },
+      {
+        "feature": "Department_Research & Development",
+        "coefficient": 0.3789
+      }
+    ]
+  },
+  "random_forest": {
+    "model_name": "Random Forest Classifier (Ensemble Method)",
+    "cv_roc_auc_mean": 0.7796,
+    "cv_roc_auc_std": 0.0218,
+    "test_roc_auc": 0.8341,
+    "confusion_matrix": {
+      "true_negatives": 241,
+      "false_positives": 7,
+      "false_negatives": 31,
+      "true_positives": 16
+    },
+    "metrics": {
+      "precision": 0.6957,
+      "recall": 0.3404,
+      "f1_score": 0.4571,
+      "accuracy": 0.8712
+    },
+    "top_drivers": [
+      {
+        "feature": "MonthlyIncome",
+        "importance": 0.0811
+      },
+      {
+        "feature": "OverTime_Yes",
+        "importance": 0.0667
+      },
+      {
+        "feature": "TotalWorkingYears",
+        "importance": 0.0533
+      },
+      {
+        "feature": "Age",
+        "importance": 0.0507
+      },
+      {
+        "feature": "DailyRate",
+        "importance": 0.0475
+      },
+      {
+        "feature": "MonthlyRate",
+        "importance": 0.0474
+      },
+      {
+        "feature": "YearsAtCompany",
+        "importance": 0.0469
+      },
+      {
+        "feature": "HourlyRate",
+        "importance": 0.0438
+      },
+      {
+        "feature": "DistanceFromHome",
+        "importance": 0.0397
+      },
+      {
+        "feature": "StockOptionLevel",
+        "importance": 0.0395
+      }
+    ]
+  },
+  "roc_curves": {
+    "logistic_regression": [
+      {
+        "fpr": 0.0,
+        "tpr": 0.0
+      },
+      {
+        "fpr": 0.004,
+        "tpr": 0.1915
+      },
+      {
+        "fpr": 0.0121,
+        "tpr": 0.4681
+      },
+      {
+        "fpr": 0.0565,
+        "tpr": 0.5106
+      },
+      {
+        "fpr": 0.0685,
+        "tpr": 0.5532
+      },
+      {
+        "fpr": 0.0726,
+        "tpr": 0.5957
+      },
+      {
+        "fpr": 0.0806,
+        "tpr": 0.6596
+      },
+      {
+        "fpr": 0.1492,
+        "tpr": 0.7021
+      },
+      {
+        "fpr": 0.1895,
+        "tpr": 0.7447
+      },
+      {
+        "fpr": 0.2097,
+        "tpr": 0.8085
+      },
+      {
+        "fpr": 0.254,
+        "tpr": 0.8298
+      },
+      {
+        "fpr": 0.3024,
+        "tpr": 0.8723
+      },
+      {
+        "fpr": 0.496,
+        "tpr": 0.9149
+      },
+      {
+        "fpr": 0.5565,
+        "tpr": 0.9574
+      },
+      {
+        "fpr": 1.0,
+        "tpr": 1.0
+      }
+    ],
+    "random_forest": [
+      {
+        "fpr": 0.0,
+        "tpr": 0.0
+      },
+      {
+        "fpr": 0.004,
+        "tpr": 0.234
+      },
+      {
+        "fpr": 0.0121,
+        "tpr": 0.2766
+      },
+      {
+        "fpr": 0.0524,
+        "tpr": 0.3404
+      },
+      {
+        "fpr": 0.0645,
+        "tpr": 0.4043
+      },
+      {
+        "fpr": 0.0766,
+        "tpr": 0.4681
+      },
+      {
+        "fpr": 0.0887,
+        "tpr": 0.5745
+      },
+      {
+        "fpr": 0.1048,
+        "tpr": 0.6383
+      },
+      {
+        "fpr": 0.1532,
+        "tpr": 0.6809
+      },
+      {
+        "fpr": 0.246,
+        "tpr": 0.7447
+      },
+      {
+        "fpr": 0.3105,
+        "tpr": 0.7872
+      },
+      {
+        "fpr": 0.3266,
+        "tpr": 0.8511
+      },
+      {
+        "fpr": 0.4113,
+        "tpr": 0.9149
+      },
+      {
+        "fpr": 0.6855,
+        "tpr": 0.9574
+      },
+      {
+        "fpr": 1.0,
+        "tpr": 1.0
+      }
+    ]
+  },
+  "risk_category_counts": {
+    "High Risk": 321,
+    "Medium Risk": 344,
+    "Low Risk": 808
+  },
+  "department_risk_breakdown": {
+    "Human Resources": {
+      "High Risk": 14,
+      "Low Risk": 30,
+      "Medium Risk": 19
+    },
+    "Research & Development": {
+      "High Risk": 170,
+      "Low Risk": 580,
+      "Medium Risk": 213
+    },
+    "Sales": {
+      "High Risk": 137,
+      "Low Risk": 198,
+      "Medium Risk": 112
+    }
+  },
+  "sample_employees": [
+    {
+      "Age": 18,
+      "Department": "Research & Development",
+      "JobRole": "Laboratory Technician",
+      "MonthlyIncome": 1420.0,
+      "OverTime": "No",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.5818,
+      "Risk_Category": "Medium Risk"
+    },
+    {
+      "Age": 18,
+      "Department": "Sales",
+      "JobRole": "Sales Representative",
+      "MonthlyIncome": 1200.0,
+      "OverTime": "No",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.8155,
+      "Risk_Category": "High Risk"
+    },
+    {
+      "Age": 18,
+      "Department": "Sales",
+      "JobRole": "Sales Representative",
+      "MonthlyIncome": 1878.0,
+      "OverTime": "Yes",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.9838,
+      "Risk_Category": "High Risk"
+    },
+    {
+      "Age": 18,
+      "Department": "Research & Development",
+      "JobRole": "Research Scientist",
+      "MonthlyIncome": 1051.0,
+      "OverTime": "No",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.1586,
+      "Risk_Category": "Low Risk"
+    },
+    {
+      "Age": 18,
+      "Department": "Research & Development",
+      "JobRole": "Laboratory Technician",
+      "MonthlyIncome": 1904.0,
+      "OverTime": "No",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.5174,
+      "Risk_Category": "Medium Risk"
+    },
+    {
+      "Age": 18,
+      "Department": "Research & Development",
+      "JobRole": "Laboratory Technician",
+      "MonthlyIncome": 1611.0,
+      "OverTime": "No",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.0409,
+      "Risk_Category": "Low Risk"
+    },
+    {
+      "Age": 18,
+      "Department": "Sales",
+      "JobRole": "Sales Representative",
+      "MonthlyIncome": 1569.0,
+      "OverTime": "Yes",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.9686,
+      "Risk_Category": "High Risk"
+    },
+    {
+      "Age": 18,
+      "Department": "Research & Development",
+      "JobRole": "Research Scientist",
+      "MonthlyIncome": 1514.0,
+      "OverTime": "No",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.1821,
+      "Risk_Category": "Low Risk"
+    },
+    {
+      "Age": 19,
+      "Department": "Sales",
+      "JobRole": "Sales Representative",
+      "MonthlyIncome": 1675.0,
+      "OverTime": "Yes",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.9652,
+      "Risk_Category": "High Risk"
+    },
+    {
+      "Age": 19,
+      "Department": "Research & Development",
+      "JobRole": "Laboratory Technician",
+      "MonthlyIncome": 1483.0,
+      "OverTime": "No",
+      "YearsAtCompany": 1,
+      "FlightRiskScore_LR": 0.526,
+      "Risk_Category": "Medium Risk"
+    },
+    {
+      "Age": 19,
+      "Department": "Sales",
+      "JobRole": "Sales Representative",
+      "MonthlyIncome": 2325.0,
+      "OverTime": "No",
+      "YearsAtCompany": 0,
+      "FlightRiskScore_LR": 0.9542,
+      "Risk_Category": "High Risk"
+    },
+    {
+      "Age": 19,
+      "Department": "Research & Development",
+      "JobRole": "Laboratory Technician",
+      "MonthlyIncome": 1102.0,
+      "OverTime": "No",
+      "YearsAtCompany": 1,
+      "FlightRiskScore_LR": 0.6496,
+      "Risk_Category": "Medium Risk"
+    },
+    {
+      "Age": 19,
+      "Department": "Human Resources",
+      "JobRole": "Human Resources",
+      "MonthlyIncome": 2564.0,
+      "OverTime": "No",
+      "YearsAtCompany": 1,
+      "FlightRiskScore_LR": 0.7878,
+      "Risk_Category": "High Risk"
+    },
+    {
+      "Age": 19,
+      "Department": "Sales",
+      "JobRole": "Sales Representative",
+      "MonthlyIncome": 2121.0,
+      "OverTime": "Yes",
+      "YearsAtCompany": 1,
+      "FlightRiskScore_LR": 0.977,
+      "Risk_Category": "High Risk"
+    },
+    {
+      "Age": 19,
+      "Department": "Research & Development",
+      "JobRole": "Research Scientist",
+      "MonthlyIncome": 2552.0,
+      "OverTime": "No",
+      "YearsAtCompany": 1,
+      "FlightRiskScore_LR": 0.2661,
+      "Risk_Category": "Low Risk"
+    }
+  ]
+}

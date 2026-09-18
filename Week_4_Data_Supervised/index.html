@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Supervised Learning — Employee Attrition Risk Dashboard</title>
+    
+    <!-- Google Fonts & Chart.js -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-brand">
+                <div class="brand-icon">⚡</div>
+                <div>
+                    <h1>HR Supervised Learning & Predictive Analytics</h1>
+                    <div class="subtitle">Benchmarking Logistic Regression vs. Random Forest for Attrition Early Warning</div>
+                </div>
+            </div>
+            <div class="header-badges">
+                <span class="badge badge-emerald">Model: Logistic Regression</span>
+                <span class="badge badge-purple">45 Encoded Features</span>
+                <span class="badge badge-amber">1,473 Dataset Records</span>
+            </div>
+        </header>
+
+        <!-- KPI Cards Grid -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span>LG Minority Recall</span>
+                    <div class="kpi-icon" style="background: rgba(16,185,129,0.15); color: #10b981;">🎯</div>
+                </div>
+                <div class="kpi-value" id="kpi-recall">82.98%</div>
+                <div class="kpi-subtext">Catches 39 out of 47 departing employees</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span>Logistic Regression AUC</span>
+                    <div class="kpi-icon" style="background: rgba(99,102,241,0.15); color: #6366f1;">📈</div>
+                </div>
+                <div class="kpi-value" id="kpi-lr-auc">0.8854</div>
+                <div class="kpi-subtext">5-Fold CV ROC-AUC: 0.7979</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span>Random Forest AUC</span>
+                    <div class="kpi-icon" style="background: rgba(6,182,212,0.15); color: #06b6d4;">🌲</div>
+                </div>
+                <div class="kpi-value" id="kpi-rf-auc">0.8341</div>
+                <div class="kpi-subtext">5-Fold CV ROC-AUC: 0.7796</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-header">
+                    <span>High Flight Risk Count</span>
+                    <div class="kpi-icon" style="background: rgba(239,68,68,0.15); color: #ef4444;">🚨</div>
+                </div>
+                <div class="kpi-value" id="kpi-high-risk">416</div>
+                <div class="kpi-subtext">Employees with ≥ 65% Risk Score</div>
+            </div>
+        </section>
+
+        <!-- Confusion Matrix Comparison Grid -->
+        <section class="grid-2col">
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>Logistic Regression (Selected Benchmark)</span>
+                    <span class="badge badge-emerald">Prioritizes Sensitivity (Recall)</span>
+                </div>
+                <p style="font-size: 13px; color: var(--text-secondary);">
+                    Optimized with <code>class_weight='balanced'</code> to catch flight risks early. False Negatives are severely penalized.
+                </p>
+                <div class="cm-container">
+                    <div class="cm-box tn">
+                        <span class="cm-label">True Negatives</span>
+                        <span class="cm-val" id="cm-lr-tn">185</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Stayed & Predicted Stay</span>
+                    </div>
+                    <div class="cm-box fp">
+                        <span class="cm-label">False Positives</span>
+                        <span class="cm-val" id="cm-lr-fp">63</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Stayed but Flagged Risk</span>
+                    </div>
+                    <div class="cm-box fn">
+                        <span class="cm-label">False Negatives (Critical)</span>
+                        <span class="cm-val" id="cm-lr-fn">8</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Missed Resignations</span>
+                    </div>
+                    <div class="cm-box tp">
+                        <span class="cm-label">True Positives</span>
+                        <span class="cm-val" id="cm-lr-tp">39</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Correctly Caught Quitting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>Random Forest Classifier (Ensemble)</span>
+                    <span class="badge badge-purple">Higher Precision / Lower Recall</span>
+                </div>
+                <p style="font-size: 13px; color: var(--text-secondary);">
+                    Decision tree ensemble (n_estimators=100, max_depth=10). Yields fewer false alarms but misses 31 departing staff.
+                </p>
+                <div class="cm-container">
+                    <div class="cm-box tn">
+                        <span class="cm-label">True Negatives</span>
+                        <span class="cm-val" id="cm-rf-tn">241</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Stayed & Predicted Stay</span>
+                    </div>
+                    <div class="cm-box fp">
+                        <span class="cm-label">False Positives</span>
+                        <span class="cm-val" id="cm-rf-fp">7</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Stayed but Flagged Risk</span>
+                    </div>
+                    <div class="cm-box fn">
+                        <span class="cm-label">False Negatives (Critical)</span>
+                        <span class="cm-val" id="cm-rf-fn">31</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Missed Resignations</span>
+                    </div>
+                    <div class="cm-box tp">
+                        <span class="cm-label">True Positives</span>
+                        <span class="cm-val" id="cm-rf-tp">16</span>
+                        <span style="font-size: 11px; color: var(--text-muted);">Correctly Caught Quitting</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid: ROC Curves & Feature Importance -->
+        <section class="grid-2col">
+            <div class="glass-card">
+                <div class="card-title">ROC Curves Comparison</div>
+                <div style="height: 320px; position: relative;">
+                    <canvas id="rocChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-title">Top Attrition Drivers (Logistic Regression Log-Odds)</div>
+                <div style="height: 320px; position: relative;">
+                    <canvas id="driversChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Flight Risk Predictor Simulator -->
+        <section class="glass-card">
+            <div class="card-title">
+                <span>⚡ Interactive Employee Flight Risk Predictor Simulator</span>
+                <span class="badge badge-amber">Real-Time Risk Calculation</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-secondary);">
+                Adjust employee parameters below to simulate their flight risk score and trigger automated HR retention recommendations.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: center;">
+                <form class="simulator-form" id="sim-form">
+                    <div class="form-group">
+                        <label for="sim-overtime">OverTime Status</label>
+                        <select id="sim-overtime">
+                            <option value="Yes" selected>Yes (Overtime Required)</option>
+                            <option value="No">No (Standard Hours)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sim-travel">Business Travel</label>
+                        <select id="sim-travel">
+                            <option value="Travel_Frequently" selected>Travel Frequently</option>
+                            <option value="Travel_Rarely">Travel Rarely</option>
+                            <option value="Non-Travel">Non-Travel</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sim-dept">Department</label>
+                        <select id="sim-dept">
+                            <option value="Sales" selected>Sales</option>
+                            <option value="Research & Development">Research & Development</option>
+                            <option value="Human Resources">Human Resources</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sim-income">Monthly Income ($)</label>
+                        <input type="number" id="sim-income" value="3200" step="500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sim-tenure">Years At Company</label>
+                        <input type="number" id="sim-tenure" value="2" min="0" max="40">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sim-satisfaction">Job Satisfaction (1-4)</label>
+                        <select id="sim-satisfaction">
+                            <option value="1">1 (Low)</option>
+                            <option value="2" selected>2 (Medium)</option>
+                            <option value="3">3 (High)</option>
+                            <option value="4">4 (Very High)</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="risk-output-card">
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Predicted Flight Risk Score</div>
+                    <div class="risk-gauge" id="risk-score-display">78.4%</div>
+                    <div class="risk-badge badge-red" id="risk-badge-display">HIGH FLIGHT RISK</div>
+                    <div class="risk-action-box" id="risk-action-display">
+                        <strong>HR Action:</strong> Schedule urgent Stay Interview &amp; initiate overtime capped work schedule within 14 days.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sample Employee Risk Directory Table -->
+        <section class="glass-card">
+            <div class="card-title">Sample Employee Flight Risk Directory</div>
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Age</th>
+                            <th>Department</th>
+                            <th>Job Role</th>
+                            <th>Monthly Income</th>
+                            <th>OverTime</th>
+                            <th>Years at Company</th>
+                            <th>Flight Risk Score (LR)</th>
+                            <th>Risk Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Populated dynamically via app.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
