@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 5: HR Attrition Neural Network Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <div class="brand-icon">🧠</div>
+        <div>
+          <h1>HR Attrition Neural Network</h1>
+          <p class="subtitle">Week 5 — Deep Learning Sequential MLP Classifier & Trade-off Analysis</p>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span class="pulse-dot"></span> PyTorch Sequential ANN
+      </div>
+    </header>
+
+    <!-- KPI Summary Grid -->
+    <section class="kpi-grid">
+      <div class="kpi-card accent-purple">
+        <div class="kpi-header">
+          <span class="kpi-title">ROC-AUC Score</span>
+          <span class="kpi-icon">📈</span>
+        </div>
+        <div class="kpi-value" id="kpi-auc">0.8519</div>
+        <div class="kpi-subtext">Strong discriminative capacity across 56 features</div>
+      </div>
+
+      <div class="kpi-card accent-emerald">
+        <div class="kpi-header">
+          <span class="kpi-title">Attrited Recall</span>
+          <span class="kpi-icon">🎯</span>
+        </div>
+        <div class="kpi-value" id="kpi-recall">72.34%</div>
+        <div class="kpi-subtext">34 of 47 departing employees isolated</div>
+      </div>
+
+      <div class="kpi-card accent-amber">
+        <div class="kpi-header">
+          <span class="kpi-title">Attrited Precision</span>
+          <span class="kpi-icon">🔍</span>
+        </div>
+        <div class="kpi-value" id="kpi-precision">51.52%</div>
+        <div class="kpi-subtext">Trade-off driven by dynamic class weighting</div>
+      </div>
+
+      <div class="kpi-card accent-indigo">
+        <div class="kpi-header">
+          <span class="kpi-title">Early Stopping Epoch</span>
+          <span class="kpi-icon">⏱️</span>
+        </div>
+        <div class="kpi-value" id="kpi-epoch">Epoch 8</div>
+        <div class="kpi-subtext">Restored best weights (Val Loss: 0.7375)</div>
+      </div>
+    </section>
+
+    <!-- Main Content Layout -->
+    <div class="content-grid">
+      <!-- Architecture & Trajectory Panel -->
+      <div class="panel main-panel">
+        <div class="panel-header">
+          <h2>Neural Network Architecture & Training Trajectory</h2>
+          <span class="badge">Multi-Layer Perceptron</span>
+        </div>
+
+        <!-- Architecture Topology Diagram -->
+        <div class="architecture-diagram">
+          <div class="layer-node input-layer">
+            <div class="layer-title">Input Layer</div>
+            <div class="layer-count">56 Features</div>
+            <div class="layer-desc">Demographics & Pay</div>
+          </div>
+          <div class="layer-arrow">➔</div>
+
+          <div class="layer-node hidden-layer">
+            <div class="layer-title">Hidden Layer 1</div>
+            <div class="layer-count">64 Neurons</div>
+            <div class="layer-desc">ReLU + DropOut 0.3</div>
+          </div>
+          <div class="layer-arrow">➔</div>
+
+          <div class="layer-node hidden-layer">
+            <div class="layer-title">Hidden Layer 2</div>
+            <div class="layer-count">32 Neurons</div>
+            <div class="layer-desc">ReLU + DropOut 0.2</div>
+          </div>
+          <div class="layer-arrow">➔</div>
+
+          <div class="layer-node output-layer">
+            <div class="layer-title">Output Layer</div>
+            <div class="layer-count">1 Neuron</div>
+            <div class="layer-desc">Sigmoid Activation</div>
+          </div>
+        </div>
+
+        <!-- Loss Chart -->
+        <div class="chart-container">
+          <canvas id="lossChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Evaluation & Confusion Matrix Panel -->
+      <div class="panel side-panel">
+        <div class="panel-header">
+          <h2>Test Evaluation & Confusion Matrix</h2>
+          <span class="badge">N = 295 Test Holdout</span>
+        </div>
+
+        <!-- Confusion Matrix Grid -->
+        <div class="cm-container">
+          <div class="cm-header-label">Predicted Stayed</div>
+          <div class="cm-header-label">Predicted Departed</div>
+
+          <div class="cm-cell tn-cell">
+            <div class="cm-value">216</div>
+            <div class="cm-type">True Negative (TN)</div>
+            <div class="cm-desc">Correctly predicted Stayed</div>
+          </div>
+
+          <div class="cm-cell fp-cell">
+            <div class="cm-value">32</div>
+            <div class="cm-type">False Positive (FP)</div>
+            <div class="cm-desc">False Alarm (Stayed $\rightarrow$ Risk)</div>
+          </div>
+
+          <div class="cm-cell fn-cell">
+            <div class="cm-value">13</div>
+            <div class="cm-type">False Negative (FN)</div>
+            <div class="cm-desc">Missed Flight Risk</div>
+          </div>
+
+          <div class="cm-cell tp-cell">
+            <div class="cm-value">34</div>
+            <div class="cm-type">True Positive (TP)</div>
+            <div class="cm-desc">Correctly Caught Departed</div>
+          </div>
+        </div>
+
+        <!-- Key Trade-off Card -->
+        <div class="tradeoff-card">
+          <h3>⚡ Strategic Trade-off Analysis</h3>
+          <p>
+            Identifying <strong>72.34%</strong> of departing employees (Recall) is the primary objective in HR analytics. The model accepts a precision of 51.52% to ensure flight-risk personnel are proactively flagged for retention interventions.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Risk Simulator -->
+    <section class="panel simulator-panel">
+      <div class="panel-header">
+        <h2>Interactive Employee Attrition Risk Simulator</h2>
+        <span class="badge">Neural Network Simulation</span>
+      </div>
+
+      <div class="simulator-grid">
+        <div class="sim-controls">
+          <div class="control-group">
+            <label for="sim-overtime">OverTime Status:</label>
+            <select id="sim-overtime">
+              <option value="1">Yes (Heavy Overtime)</option>
+              <option value="0" selected>No (Standard Hours)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="sim-income">Monthly Income ($): <span id="val-income">4,000</span></label>
+            <input type="range" id="sim-income" min="1000" max="20000" step="500" value="4000">
+          </div>
+
+          <div class="control-group">
+            <label for="sim-distance">Distance From Home (Miles): <span id="val-distance">15</span></label>
+            <input type="range" id="sim-distance" min="1" max="30" step="1" value="15">
+          </div>
+
+          <div class="control-group">
+            <label for="sim-satisfaction">Environment Satisfaction (1-4): <span id="val-satisfaction">2</span></label>
+            <input type="range" id="sim-satisfaction" min="1" max="4" step="1" value="2">
+          </div>
+
+          <div class="control-group">
+            <label for="sim-years">Years At Company: <span id="val-years">2</span></label>
+            <input type="range" id="sim-years" min="0" max="20" step="1" value="2">
+          </div>
+        </div>
+
+        <div class="sim-output">
+          <div class="gauge-container">
+            <div class="risk-score" id="risk-score">28%</div>
+            <div class="risk-label" id="risk-label">Low Risk</div>
+          </div>
+          <div class="risk-progress-bar">
+            <div class="risk-progress-fill" id="risk-fill" style="width: 28%;"></div>
+          </div>
+          <div class="sim-recommendation" id="sim-recommendation">
+            Standard monitoring. Employee demonstrates balanced workload and compensation parameters.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
