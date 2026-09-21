@@ -1,0 +1,54 @@
+
+Integrative Capstone Project: End-to-End HR Attrition Analytics Pipeline
+
+1. Executive Summary & Problem Statement
+
+Problem Statement: Corporate employee attrition represents a massive financial and operational liability. The objective of this capstone project is to design and execute a full, end-to-end data science pipeline capable of diagnosing the root causes of employee turnover and predicting future flight risks.
+Methodological Approach: This project leverages a publicly available HR Analytics dataset containing 1,480 employee records across 38 demographic and compensation metrics. The pipeline executes five distinct phases using Python:
+Data Preprocessing: Handling missing values, standardizing formats, and mathematically bounding outliers using the IQR method.
+Exploratory Data Analysis (EDA): Utilizing Pandas and Seaborn to visually uncover a "loyalty penalty" regarding internal tenure versus external market compensation.
+Unsupervised Learning: Applying K-Means clustering (k=3) optimized via the Elbow Method to autonomously segment the workforce into three distinct operational personas.
+Supervised Learning: Benchmarking a parametric Logistic Regression baseline against a deep learning Artificial Neural Network (TensorFlow/Keras) to predict binary attrition (Yes=1, No=0).
+Evaluation: Utilizing Stratified K-Fold cross-validation, algorithmic class weighting, and ROC-AUC metrics to handle severe class imbalances and prioritize minority-class recall.
+To maximize the impact of this capstone when presenting it to hiring managers, you can subsequently push the finalized Jupyter Notebook to your Git repository alongside a README.md file, and export the preprocessed data to build an interactive Tableau dashboard, proving you can handle both backend modeling and frontend business intelligence.
+2. Data Acquisition & Preprocessing
+
+The raw HR Analytics dataset (1,480 records, 38 initial attributes) required rigorous sanitization to ensure mathematical stability for downstream machine learning algorithms. All preprocessing was executed using the Python Pandas library.
+Dimensionality Reduction: Six non-predictive identifiers (e.g., EmpID) and zero-variance features (e.g., StandardHours, EmployeeCount) were dropped to reduce computational noise and mitigate the curse of dimensionality.
+
+Imputation Strategy: The YearsWithCurrManager feature contained 57 missing entries (~3.8% of the data). To preserve row volume without skewing the distribution,-6350481834
+ missing values were resolved via median imputation.
+Outlier Mitigation: Visual inspection via Seaborn boxplots revealed extreme right-skewed outliers in the MonthlyIncome feature. The Interquartile Range (IQR) method was mathematically applied to establish upper boundaries, capping executive salaries to prevent distance-based clustering algorithms and neural networks from being disproportionately biased by extreme magnitudes.
+3. Exploratory Data Analysis (EDA)
+
+With a sanitized dataset (1,480 rows, 32 columns), an Exploratory Data Analysis was conducted using Matplotlib and Seaborn to extract baseline workforce trends and diagnose potential retention risks.
+Univariate Analysis (Class Imbalance): The target variable (Attrition) exhibited a severe class imbalance, with 16.15% of employees departing versus 83.85% being retained. The age distribution approximated a normal distribution, heavily concentrated between 30 and 35 years old.
+Bivariate Analysis (Compensation Discrepancy): Cross-tabulations and comparative boxplots confirmed that departing employees possessed a significantly lower median MonthlyIncome and fewer TotalWorkingYears compared to retained personnel. Furthermore, the Sales department demonstrated a disproportionately high attrition rate compared to Research & Development.
+
+Figure 1: Preprocessing and EDA visualizations identifying severe class imbalances and correlating compensation metrics against attrition status.
+-6350355600
+
+Multivariate Analysis (The Loyalty Penalty): A numerical correlation heatmap was generated to track feature interactions. It revealed a strong positive correlation (0.77) between MonthlyIncome and TotalWorkingYears (overall industry experience), but a much weaker correlation (0.51) between MonthlyIncome and YearsAtCompany (internal tenure). This discrepancy identified a potential "loyalty penalty," suggesting that internal wage growth scales slower than external market rates, inadvertently incentivizing highly experienced employees to leave for competitive compensation.
+
+4. Unsupervised Learning: Workforce Segmentation
+
+To identify natural groupings within the employee base without relying on labeled targets, K-Means clustering was applied. Continuous variables (Age, MonthlyIncome, TotalWorkingYears) were standardized using StandardScaler to prevent larger magnitude features from dominating Euclidean distance calculations. The Elbow Method determined the optimal number of clusters at $k=3$. The algorithm successfully segmented the workforce into three distinct personas:
+Cluster A (Junior Core): Early-career employees with low tenure and entry-level compensation.
+Cluster B (Mid-Level Professionals): The operational backbone with moderate experience and mid-tier salaries.
+Cluster C (Senior Leadership): Highly compensated executives with extensive industry experience.
+5. Supervised Learning: Attrition Prediction Pipeline
+-6350201320
+
+To predict binary attrition, categorical features were transformed via One-Hot Encoding (drop_first=True), expanding the dataset to 45 dimensions. The data was split 80/20 using stratify=y to preserve the 84/16 class imbalance. Two distinct algorithms were benchmarked:
+Logistic Regression (Baseline): A linear parametric model utilizing L2 regularization (solver='lbfgs').
+Artificial Neural Network 800771333920
+8007715000045
+(Deep Learning): A sequential Multi-Layer Perceptron (TensorFlow/Keras) featuring two hidden layers (64 and 32 neurons) with ReLU activations and DropOut layers (0.3 and 0.2) to prevent memorization. It was compiled with the Adam optimizer and an EarlyStopping callback to monitor validation loss.
+Both models utilized algorithmic class weighting (class_weight='balanced') to heavily penalize false negatives on the minority class, prioritizing the identification of actual flight-risk employees over baseline accuracy
+6. Critical Evaluation & Challenges
+
+Deploying machine learning on a constrained tabular dataset of 1,480 rows presented significant overfitting risks, particularly for the neural network. While Early Stopping and DropOut regularization successfully stabilized the ANN's training trajectory, the model operates as a "black box," lacking the interpretability required by HR stakeholders. Consequently, the Logistic Regression model emerged as the superior operational choice. It achieved comparable ROC-AUC scores while providing explicit feature coefficients, allowing HR leadership to understand exactly why an employee was flagged as a flight risk.
+7. Strategic Recommendations & Future Scope
+
+
+The end-to-end pipeline confirmed that compensation disparities and role stagnation are primary drivers of turnover. HR leadership should conduct an immediate compensation audit to address the "loyalty penalty" identified during the EDA phase, ensuring internal wage growth matches external market rates for highly tenured employees. Future iterations of this data science pipeline should ingest time-series metrics—such as real-time PTO utilization or quarterly pulse survey sentiments—to transition the models from static snapshots to dynamic, real-time prediction engines.

@@ -1,0 +1,102 @@
+{
+  "project_title": "Integrative Capstone Project: End-to-End HR Attrition Analytics Pipeline",
+  "dataset_overview": {
+    "total_records": 1473,
+    "features_count": 38,
+    "retained_count": 1236,
+    "retained_rate": 83.91,
+    "attrition_count": 237,
+    "attrition_rate": 16.09,
+    "loyalty_penalty_ratio": 1.5,
+    "corr_income_total_years": 0.77,
+    "corr_income_company_years": 0.51
+  },
+  "department_breakdown": {
+    "Human Resources": {
+      "total": 63,
+      "attrition": 12,
+      "rate": 19.05
+    },
+    "Research & Development": {
+      "total": 963,
+      "attrition": 133,
+      "rate": 13.81
+    },
+    "Sales": {
+      "total": 447,
+      "attrition": 92,
+      "rate": 20.58
+    }
+  },
+  "cluster_segmentation": {
+    "Cluster_0": {
+      "persona": "Junior Core",
+      "size": 650,
+      "percentage": 44.13,
+      "avg_age": 29.2,
+      "avg_income": 3886.22,
+      "avg_tenure": 5.9,
+      "attrition_rate": 23.08
+    },
+    "Cluster_1": {
+      "persona": "Mid-Level Professionals",
+      "size": 240,
+      "percentage": 16.29,
+      "avg_age": 47.9,
+      "avg_income": 14402.5,
+      "avg_tenure": 25.0,
+      "attrition_rate": 7.5
+    },
+    "Cluster_2": {
+      "persona": "Senior Leadership",
+      "size": 583,
+      "percentage": 39.58,
+      "avg_age": 41.0,
+      "avg_income": 5806.44,
+      "avg_tenure": 11.6,
+      "attrition_rate": 11.84
+    }
+  },
+  "model_benchmarks": {
+    "logistic_regression": {
+      "name": "Logistic Regression (Parametric Baseline)",
+      "roc_auc": 0.8914,
+      "recall": 0.8936,
+      "precision": 0.4242,
+      "f1_score": 0.5753,
+      "confusion_matrix": [
+        [
+          191,
+          57
+        ],
+        [
+          5,
+          42
+        ]
+      ]
+    },
+    "deep_learning_ann": {
+      "name": "Artificial Neural Network (PyTorch MLP)",
+      "roc_auc": 0.8942,
+      "recall": 0.8723,
+      "precision": 0.4713,
+      "f1_score": 0.6119,
+      "confusion_matrix": [
+        [
+          202,
+          46
+        ],
+        [
+          6,
+          41
+        ]
+      ]
+    }
+  },
+  "strategic_recommendations": [
+    "Conduct immediate compensation audit to resolve the 'Loyalty Penalty' where external hires out-earn internal tenured staff.",
+    "Implement tailored retention programs for Cluster A (Junior Core) employees facing high entry-level churn.",
+    "Deploy the parametric Logistic Regression model for production HR risk scoring due to its transparency and explainability.",
+    "Integrate real-time time-series metrics (PTO utilization, quarterly pulse sentiments) to transform static snapshots into dynamic prediction engines."
+  ]
+}

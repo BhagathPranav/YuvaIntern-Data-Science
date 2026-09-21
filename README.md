@@ -63,18 +63,37 @@ Repository for Yuva Internship Data Science projects and tasks.
 │   ├── create_notebook.py                  # Generator Script for Jupyter Notebook
 │   └── create_tableau_supervised_workbook.py # Builder Script for Tableau XML & TWBX Workbooks
 │
-└── Week_5_Data_Deep_Learning_HR/
-    ├── Deep_Learning_HR.docx               # Executive Report on Artificial Neural Networks (ANN) for HR Attrition
-    ├── notebook_Week5_Deep_Learning.ipynb   # Jupyter Notebook documenting PyTorch Sequential ANN, Loss Trajectory & Early Stopping
-    ├── deep_learning_analysis.py           # Automated PyTorch ML Script executing ANN Training, Early Stopping & Metrics Export
-    ├── deep_learning_summary.json          # Training Epoch Trajectory, Loss Curves, Confusion Matrix & Metrics JSON
-    ├── figures/
-    │   ├── loss_trajectory.png             # Training & Validation BCE Loss / Validation ROC-AUC Trajectory Plot
-    │   └── confusion_matrix.png            # Heatmap Visualization of ANN Confusion Matrix
-    ├── index.html                          # Interactive Glassmorphism Web Dashboard & Real-Time ANN Risk Simulator
-    ├── styles.css                          # Modern Cyberpunk/Glassmorphic Theme Styling
-    ├── app.js                              # Chart.js Training Trajectory Chart & Dynamic Neural Network Risk Simulator
-    └── create_notebook.py                  # Generator Script for Jupyter Notebook
+├── Week_5_Data_Deep_Learning_HR/
+│   ├── Deep_Learning_HR.docx               # Executive Report on Artificial Neural Networks (ANN) for HR Attrition
+│   ├── notebook_Week5_Deep_Learning.ipynb   # Jupyter Notebook documenting PyTorch Sequential ANN, Loss Trajectory & Early Stopping
+│   ├── deep_learning_analysis.py           # Automated PyTorch ML Script executing ANN Training, Early Stopping & Metrics Export
+│   ├── deep_learning_summary.json          # Training Epoch Trajectory, Loss Curves, Confusion Matrix & Metrics JSON
+│   ├── figures/
+│   │   ├── loss_trajectory.png             # Training & Validation BCE Loss / Validation ROC-AUC Trajectory Plot
+│   │   └── confusion_matrix.png            # Heatmap Visualization of ANN Confusion Matrix
+│   ├── index.html                          # Interactive Glassmorphism Web Dashboard & Real-Time ANN Risk Simulator
+│   ├── styles.css                          # Modern Cyberpunk/Glassmorphic Theme Styling
+│   ├── app.js                              # Chart.js Training Trajectory Chart & Dynamic Neural Network Risk Simulator
+│   └── create_notebook.py                  # Generator Script for Jupyter Notebook
+│
+└── Week_6/
+    ├── Bhagath_Capstone_HR_Pipeline.docx    # Integrative Capstone Project Executive Report & Pipeline Documentation
+    ├── HR_Clustering_Analysis.pages        # Capstone Analytics Documentation File
+    ├── HR_Analytics_Capstone.csv           # Processed Capstone Dataset with Encoded Features & Cluster Assignments
+    ├── capstone_pipeline.py                # End-to-End Automated Data Science Pipeline Script
+    ├── capstone_summary.json               # End-to-End Metrics, Benchmark Scores & Cluster Profiles JSON
+    ├── notebook_Week6_Capstone.ipynb       # Integrative Capstone Jupyter Notebook covering Preprocessing to Deep Learning
+    ├── create_notebook.py                  # Generator Script for Capstone Jupyter Notebook
+    ├── create_tableau_capstone_workbook.py # Builder Script for Capstone Tableau XML & TWBX Workbooks
+    ├── HR_Analytics_Capstone_Dashboard.twb # Native Tableau Capstone Dashboard XML
+    ├── HR_Analytics_Capstone_Dashboard.twbx# Packaged Tableau Capstone Dashboard (Embedded Dataset)
+    ├── index.html                          # Interactive Glassmorphism Capstone Web Dashboard & Real-Time Risk Simulator
+    ├── styles.css                          # Modern Glassmorphic Dark Theme Styling
+    ├── app.js                              # Interactive Tab Management, Department Charts & Real-Time Flight Risk Calculator
+    └── figures/
+        ├── eda_overview.png                # EDA Overview Visualizations
+        ├── kmeans_clusters.png             # K-Means Employee Persona Cluster Scatter Plot
+        └── roc_comparison.png              # Logistic Regression vs PyTorch ANN ROC-AUC Curves Plot
 ```
 
 ## 🚀 Tasks Overview
@@ -124,3 +143,11 @@ Repository for Yuva Internship Data Science projects and tasks.
   - **Confusion Matrix ($N=295$)**: 216 True Negatives, 32 False Positives, 13 False Negatives, 34 True Positives.
 - **Strategic Trade-off & Interpretability Analysis**: Evaluated the "Black Box" interpretability trade-off of neural networks against linear models (Logistic Regression) and tree ensembles (Random Forest / XGBoost) on small structured tabular datasets.
 - **Multi-Platform Visualizations & Interactive Simulator**: Generated Jupyter Notebook (`notebook_Week5_Deep_Learning.ipynb`), updated Word executive report (`Deep_Learning_HR.docx`), and built an interactive web dashboard (`index.html`) featuring real-time neural network forward-pass risk simulation.
+
+### Week 6: Integrative Capstone Project — End-to-End HR Attrition Analytics Pipeline
+- **End-to-End Data Science Pipeline**: Integrated all 5 project phases (Data Preprocessing, EDA & Loyalty Penalty, Unsupervised K-Means Clustering, Supervised & Deep Learning, Executive Business Intelligence) into a unified, reproducible pipeline script (`capstone_pipeline.py`).
+- **Loyalty Penalty Ratio**: Formally quantified the compensation penalty gap ($1.50\times$), demonstrating that external market hiring offers higher salary growth ($r = 0.77$) than internal company tenure ($r = 0.51$).
+- **Unsupervised Workforce Segmentation ($k=3$)**: Segmented the cohort into *Junior Core* (44.13% size, 23.08% turnover), *Mid-Level Professionals* (16.29% size, 7.50% turnover), and *Senior Leadership* (39.58% size, 11.84% turnover).
+- **Model Benchmarking**: Benchmarked Logistic Regression (Parametric Baseline, **ROC-AUC: 0.8914**, **Recall: 89.36%**) against PyTorch Deep Learning ANN (**ROC-AUC: 0.8942**, **Recall: 87.23%**, **F1: 0.6119**).
+- **Multi-Platform Deliverables**: Delivered the full suite including executive DOCX report (`Bhagath_Capstone_HR_Pipeline.docx`), automated Jupyter Notebook (`notebook_Week6_Capstone.ipynb`), Tableau Capstone Workbook & Packaged Dashboard (`HR_Analytics_Capstone_Dashboard.twbx`), and interactive glassmorphism Web Application (`index.html`).
+

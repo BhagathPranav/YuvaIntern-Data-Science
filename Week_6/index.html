@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrative Capstone Project | End-to-End HR Attrition Analytics Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-left">
+        <div class="badge-capsule">Capstone Project &bull; Week 6</div>
+        <h1>Integrative Capstone Project</h1>
+        <p class="subtitle">End-to-End HR Attrition Analytics & Predictive Modeling Pipeline</p>
+      </div>
+      <div class="header-right">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span>Pipeline Deployed</span>
+        </div>
+        <div class="repo-meta">1,473 Employees &bull; 58 Features &bull; PyTorch ANN</div>
+      </div>
+    </header>
+
+    <!-- KPI Summary Row -->
+    <section class="kpi-grid">
+      <div class="kpi-card" id="kpi-total">
+        <div class="kpi-icon">👥</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Total Employee Cohort</span>
+          <h2 class="kpi-value">1,473</h2>
+          <span class="kpi-sub">Sanitized & Imputed</span>
+        </div>
+      </div>
+
+      <div class="kpi-card danger" id="kpi-attrition">
+        <div class="kpi-icon">📉</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Workforce Attrition Rate</span>
+          <h2 class="kpi-value">16.09%</h2>
+          <span class="kpi-sub">237 Departed Employees</span>
+        </div>
+      </div>
+
+      <div class="kpi-card warning" id="kpi-loyalty">
+        <div class="kpi-icon">⚖️</div>
+        <div class="kpi-info">
+          <span class="kpi-label">Loyalty Penalty Ratio</span>
+          <h2 class="kpi-value">1.50x</h2>
+          <span class="kpi-sub">Market vs Internal Reward Gap</span>
+        </div>
+      </div>
+
+      <div class="kpi-card success" id="kpi-auc">
+        <div class="kpi-icon">🎯</div>
+        <div class="kpi-info">
+          <span class="kpi-label">ANN Neural Net ROC-AUC</span>
+          <h2 class="kpi-value">0.8942</h2>
+          <span class="kpi-sub">87.23% Minority Recall</span>
+        </div>
+      </div>
+    </kpi-grid>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="tab-pipeline">⚡ Pipeline Architecture</button>
+      <button class="tab-btn" data-tab="tab-eda">📊 EDA & Loyalty Penalty</button>
+      <button class="tab-btn" data-tab="tab-clustering">🔍 Workforce Segmentation</button>
+      <button class="tab-btn" data-tab="tab-models">🤖 Model Benchmarking</button>
+      <button class="tab-btn" data-tab="tab-simulator">🔮 Flight Risk Simulator</button>
+      <button class="tab-btn" data-tab="tab-recommendations">💡 Recommendations</button>
+    </nav>
+
+    <!-- Tab Contents -->
+    <main class="tab-content-area">
+      
+      <!-- TAB 1: Pipeline Architecture -->
+      <div class="tab-pane active" id="tab-pipeline">
+        <div class="section-card">
+          <div class="section-header">
+            <h3>5-Phase End-to-End Data Science Pipeline</h3>
+            <p>Complete execution lifecycle from raw data ingestion to deep learning deployment.</p>
+          </div>
+          
+          <div class="pipeline-flow">
+            <div class="pipeline-step">
+              <div class="step-num">01</div>
+              <h4>Data Preprocessing</h4>
+              <p>Dropped zero-variance features. Imputed 57 missing <code>YearsWithCurrManager</code> values using median. Bounded high-income outliers via IQR formula.</p>
+              <div class="step-tag">Pandas &bull; IQR Outliers</div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="step-num">02</div>
+              <h4>Exploratory Analysis</h4>
+              <p>Identified 16.09% baseline class imbalance. Uncovered "Loyalty Penalty" gap between industry experience (0.77 corr) vs internal tenure (0.51 corr).</p>
+              <div class="step-tag">Seaborn &bull; Heatmaps</div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="step-num">03</div>
+              <h4>Unsupervised K-Means</h4>
+              <p>Standardized continuous features. Applied K-Means ($k=3$) to segment workforce into Junior Core, Mid-Level, and Senior Leadership personas.</p>
+              <div class="step-tag">Scikit-Learn &bull; K-Means</div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="step-num">04</div>
+              <h4>Supervised Benchmarking</h4>
+              <p>Transformed categorical variables into 57 encoded features. Benchmarked Logistic Regression against PyTorch Multi-Layer Perceptron (ANN).</p>
+              <div class="step-tag">PyTorch &bull; Class Weights</div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="step-num">05</div>
+              <h4>Executive Deployment</h4>
+              <p>Constructed interactive web flight-risk simulator, JSON API summaries, and packaged Tableau Business Intelligence dashboards.</p>
+              <div class="step-tag">Tableau &bull; Web App</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: EDA & Loyalty Penalty -->
+      <div class="tab-pane" id="tab-eda">
+        <div class="grid-2col">
+          <div class="chart-card">
+            <h3>Department Attrition Breakdown</h3>
+            <div class="chart-container">
+              <canvas id="chartDepartment"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h3>The Loyalty Penalty Metric</h3>
+            <div class="loyalty-box">
+              <div class="loyalty-metric">
+                <div class="metric-block">
+                  <span class="m-val">0.77</span>
+                  <span class="m-lbl">MonthlyIncome vs TotalWorkingYears</span>
+                  <p>Strong reward for total industry experience.</p>
+                </div>
+                <div class="vs-divider">VS</div>
+                <div class="metric-block highlight">
+                  <span class="m-val">0.51</span>
+                  <span class="m-lbl">MonthlyIncome vs YearsAtCompany</span>
+                  <p>Weaker reward for internal company tenure.</p>
+                </div>
+              </div>
+              <div class="loyalty-alert">
+                ⚠️ <strong>Insight:</strong> External market hiring packages increase compensation faster than internal annual increments, creating a "Loyalty Penalty" that incentivizes tenured talent to seek external roles.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Workforce Segmentation -->
+      <div class="tab-pane" id="tab-clustering">
+        <div class="cluster-grid">
+          <div class="cluster-card" id="cluster-0">
+            <div class="cluster-header">
+              <span class="cluster-badge">Cluster 0</span>
+              <h4>Junior Core</h4>
+            </div>
+            <div class="cluster-body">
+              <div class="cluster-stat"><span>Share:</span> <strong>44.13% (650 Employees)</strong></div>
+              <div class="cluster-stat"><span>Avg Age:</span> <strong>29.2 Years</strong></div>
+              <div class="cluster-stat"><span>Avg Income:</span> <strong>$3,886 / mo</strong></div>
+              <div class="cluster-stat"><span>Avg Tenure:</span> <strong>5.9 Years</strong></div>
+              <div class="cluster-stat danger"><span>Attrition Rate:</span> <strong>23.08%</strong></div>
+            </div>
+            <div class="cluster-footer">High flight-risk entry cohort requiring structured career progression.</div>
+          </div>
+
+          <div class="cluster-card" id="cluster-1">
+            <div class="cluster-header">
+              <span class="cluster-badge">Cluster 1</span>
+              <h4>Mid-Level Professionals</h4>
+            </div>
+            <div class="cluster-body">
+              <div class="cluster-stat"><span>Share:</span> <strong>16.29% (240 Employees)</strong></div>
+              <div class="cluster-stat"><span>Avg Age:</span> <strong>47.9 Years</strong></div>
+              <div class="cluster-stat"><span>Avg Income:</span> <strong>$14,402 / mo</strong></div>
+              <div class="cluster-stat"><span>Avg Tenure:</span> <strong>25.0 Years</strong></div>
+              <div class="cluster-stat success"><span>Attrition Rate:</span> <strong>7.50%</strong></div>
+            </div>
+            <div class="cluster-footer">Stable operational backbone with low turnover and high compensation.</div>
+          </div>
+
+          <div class="cluster-card" id="cluster-2">
+            <div class="cluster-header">
+              <span class="cluster-badge">Cluster 2</span>
+              <h4>Senior Leadership</h4>
+            </div>
+            <div class="cluster-body">
+              <div class="cluster-stat"><span>Share:</span> <strong>39.58% (583 Employees)</strong></div>
+              <div class="cluster-stat"><span>Avg Age:</span> <strong>41.0 Years</strong></div>
+              <div class="cluster-stat"><span>Avg Income:</span> <strong>$5,806 / mo</strong></div>
+              <div class="cluster-stat"><span>Avg Tenure:</span> <strong>11.6 Years</strong></div>
+              <div class="cluster-stat warning"><span>Attrition Rate:</span> <strong>11.84%</strong></div>
+            </div>
+            <div class="cluster-footer">Tenured staff vulnerable to external market poaching.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: Model Benchmarking -->
+      <div class="tab-pane" id="tab-models">
+        <div class="benchmark-container">
+          <div class="benchmark-card">
+            <div class="b-header">
+              <h4>Model Performance Benchmarking Matrix</h4>
+              <span class="b-sub">Evaluated on 20% Stratified Test Set (295 Employees)</span>
+            </div>
+            <table class="benchmark-table">
+              <thead>
+                <tr>
+                  <th>Model Architecture</th>
+                  <th>ROC-AUC</th>
+                  <th>Recall (Flight Risks)</th>
+                  <th>Precision</th>
+                  <th>F1-Score</th>
+                  <th>Interpretability</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Logistic Regression (Baseline)</strong></td>
+                  <td><span class="score-pill">0.8914</span></td>
+                  <td><span class="score-pill high">89.36%</span></td>
+                  <td>42.42%</td>
+                  <td>0.5753</td>
+                  <td>High (Feature Coefficients)</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>PyTorch Neural Network (ANN MLP)</strong></td>
+                  <td><span class="score-pill best">0.8942</span></td>
+                  <td><span class="score-pill high">87.23%</span></td>
+                  <td>47.13%</td>
+                  <td><span class="score-pill best">0.6119</span></td>
+                  <td>Black Box (Multi-Layer Dropout)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="chart-card">
+            <h3>ROC Curve Performance Comparison</h3>
+            <div class="chart-container">
+              <canvas id="chartRoc"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: Flight Risk Simulator -->
+      <div class="tab-pane" id="tab-simulator">
+        <div class="simulator-wrapper">
+          <div class="sim-inputs">
+            <h3>Interactive Employee Risk Profiler</h3>
+            <p>Adjust employee features below to calculate real-time flight risk probability.</p>
+
+            <div class="form-group">
+              <label>Monthly Income ($): <span id="lblIncome">$3,500</span></label>
+              <input type="range" id="simIncome" min="1000" max="20000" step="250" value="3500">
+            </div>
+
+            <div class="form-group">
+              <label>Total Working Years: <span id="lblTotalYears">4 Years</span></label>
+              <input type="range" id="simTotalYears" min="0" max="40" step="1" value="4">
+            </div>
+
+            <div class="form-group">
+              <label>Years at Company: <span id="lblCompanyYears">2 Years</span></label>
+              <input type="range" id="simCompanyYears" min="0" max="30" step="1" value="2">
+            </div>
+
+            <div class="form-group">
+              <label>OverTime Status:</label>
+              <select id="simOvertime">
+                <option value="Yes">Yes (Works Overtime)</option>
+                <option value="No">No Overtime</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Environment Satisfaction (1-4):</label>
+              <select id="simSatisfaction">
+                <option value="1">1 - Low Satisfaction</option>
+                <option value="2">2 - Medium</option>
+                <option value="3" selected>3 - High</option>
+                <option value="4">4 - Very High</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sim-output">
+            <div class="risk-gauge-card">
+              <h4>Predicted Flight Risk Probability</h4>
+              <div class="gauge-display">
+                <div class="gauge-value" id="riskPercent">68.4%</div>
+                <div class="risk-status-pill high" id="riskLevel">HIGH FLIGHT RISK</div>
+              </div>
+              <div class="risk-bar-bg">
+                <div class="risk-bar-fill" id="riskBar" style="width: 68.4%;"></div>
+              </div>
+
+              <div class="sim-factors">
+                <h5>Key Contributing Factors:</h5>
+                <ul id="riskFactors">
+                  <li>Active OverTime status significantly increases stress score.</li>
+                  <li>Low Monthly Income relative to Total Working Years creates a Loyalty Penalty.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: Strategic Recommendations -->
+      <div class="tab-pane" id="tab-recommendations">
+        <div class="recommendations-grid">
+          <div class="rec-card">
+            <div class="rec-icon">💰</div>
+            <h4>1. Resolve the Loyalty Penalty</h4>
+            <p>Execute an immediate compensation parity audit. Ensure internal annual merit increments match external market benchmarks for staff with over 5+ years of total experience.</p>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-icon">🌱</div>
+            <h4>2. Junior Core (Cluster A) Retention</h4>
+            <p>Establish structured early-career mentorship and clear 18-month promotion tracks for entry-level roles experiencing high 23.08% churn.</p>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-icon">🛡️</div>
+            <h4>3. Deploy Explainable AI Models</h4>
+            <p>Utilize the parametric Logistic Regression model in production HR dashboards to provide managers with interpretable flight-risk drivers for every employee.</p>
+          </div>
+
+          <div class="rec-card">
+            <div class="rec-icon">📈</div>
+            <h4>4. Future Scope: Real-time Pulse Ingestion</h4>
+            <p>Expand the pipeline to ingest dynamic time-series features (e.g., quarterly pulse survey sentiment, PTO balance utilization) for continuous real-time flight risk monitoring.</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 HR Attrition Analytics Capstone Project &bull; Built with PyTorch, Scikit-Learn, and Vanilla CSS</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
