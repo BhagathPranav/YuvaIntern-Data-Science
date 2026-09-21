@@ -49,19 +49,32 @@ Repository for Yuva Internship Data Science projects and tasks.
 │   ├── create_notebook.py                  # Generator Script for Jupyter Notebook
 │   └── create_tableau_clustering_workbook.py # Builder Script for Tableau XML & TWBX Workbooks
 │
-└── Week_4_Data_Supervised/
-    ├── HR_Supervised_Learning_Final.docx   # Executive Report on Supervised Attrition Classification & Algorithm Benchmarking
-    ├── notebook_Week4_Supervised.ipynb     # Jupyter Notebook documenting Feature Engineering, Train/Test Split, 5-Fold CV & ROC Curves
-    ├── supervised_analysis.py              # Automated Python ML Script executing Classification Pipeline & Metrics Export
-    ├── supervised_summary.json             # Model Metrics, Confusion Matrices, ROC Data & Top Drivers for Web Dashboard
-    ├── HR_Analytics_Supervised.csv         # Enriched Dataset with Predicted Flight Risk Scores & Risk Categories
-    ├── HR_Analytics_Supervised_Dashboard.twb  # Native Tableau Supervised Learning Workbook XML
-    ├── HR_Analytics_Supervised_Dashboard.twbx # Packaged Tableau Supervised Learning Workbook (Embedded Data)
-    ├── index.html                          # Interactive Executive Cyberpunk Web Dashboard & Real-Time Flight Risk Simulator
-    ├── styles.css                          # Cyberpunk Glassmorphism Dark Theme Styling
-    ├── app.js                              # Chart.js Visualizations, Confusion Matrix Renderers & Interactive Simulator Logic
-    ├── create_notebook.py                  # Generator Script for Jupyter Notebook
-    └── create_tableau_supervised_workbook.py # Builder Script for Tableau XML & TWBX Workbooks
+├── Week_4_Data_Supervised/
+│   ├── HR_Supervised_Learning_Final.docx   # Executive Report on Supervised Attrition Classification & Algorithm Benchmarking
+│   ├── notebook_Week4_Supervised.ipynb     # Jupyter Notebook documenting Feature Engineering, Train/Test Split, 5-Fold CV & ROC Curves
+│   ├── supervised_analysis.py              # Automated Python ML Script executing Classification Pipeline & Metrics Export
+│   ├── supervised_summary.json             # Model Metrics, Confusion Matrices, ROC Data & Top Drivers for Web Dashboard
+│   ├── HR_Analytics_Supervised.csv         # Enriched Dataset with Predicted Flight Risk Scores & Risk Categories
+│   ├── HR_Analytics_Supervised_Dashboard.twb  # Native Tableau Supervised Learning Workbook XML
+│   ├── HR_Analytics_Supervised_Dashboard.twbx # Packaged Tableau Supervised Learning Workbook (Embedded Data)
+│   ├── index.html                          # Interactive Executive Cyberpunk Web Dashboard & Real-Time Flight Risk Simulator
+│   ├── styles.css                          # Cyberpunk Glassmorphism Dark Theme Styling
+│   ├── app.js                              # Chart.js Visualizations, Confusion Matrix Renderers & Interactive Simulator Logic
+│   ├── create_notebook.py                  # Generator Script for Jupyter Notebook
+│   └── create_tableau_supervised_workbook.py # Builder Script for Tableau XML & TWBX Workbooks
+│
+└── Week_5_Data_Deep_Learning_HR/
+    ├── Deep_Learning_HR.docx               # Executive Report on Artificial Neural Networks (ANN) for HR Attrition
+    ├── notebook_Week5_Deep_Learning.ipynb   # Jupyter Notebook documenting PyTorch Sequential ANN, Loss Trajectory & Early Stopping
+    ├── deep_learning_analysis.py           # Automated PyTorch ML Script executing ANN Training, Early Stopping & Metrics Export
+    ├── deep_learning_summary.json          # Training Epoch Trajectory, Loss Curves, Confusion Matrix & Metrics JSON
+    ├── figures/
+    │   ├── loss_trajectory.png             # Training & Validation BCE Loss / Validation ROC-AUC Trajectory Plot
+    │   └── confusion_matrix.png            # Heatmap Visualization of ANN Confusion Matrix
+    ├── index.html                          # Interactive Glassmorphism Web Dashboard & Real-Time ANN Risk Simulator
+    ├── styles.css                          # Modern Cyberpunk/Glassmorphic Theme Styling
+    ├── app.js                              # Chart.js Training Trajectory Chart & Dynamic Neural Network Risk Simulator
+    └── create_notebook.py                  # Generator Script for Jupyter Notebook
 ```
 
 ## 🚀 Tasks Overview
@@ -100,5 +113,14 @@ Repository for Yuva Internship Data Science projects and tasks.
 - **Interactive Web Flight Risk Simulator**: Built a dynamic real-time web flight risk calculator for HR managers to simulate flight risk scores and receive automated retention recommendations.
 - **Multi-Platform Visualizations**: Generated Jupyter Notebook (`notebook_Week4_Supervised.ipynb`), Tableau Packaged Dashboard (`HR_Analytics_Supervised_Dashboard.twbx`), and interactive Web Dashboard (`index.html`).
 
-
-
+### Week 5: Deep Learning — Artificial Neural Network (ANN) HR Attrition Classifier & Trade-off Analysis
+- **Neural Network Architecture Topology**: Constructed a Sequential Multi-Layer Perceptron (MLP) within PyTorch/Keras mapping 56 input features through two hidden layers ($h_1 = 64$ neurons with `ReLU` & DropOut $0.3$, $h_2 = 32$ neurons with `ReLU` & DropOut $0.2$) to a single `Sigmoid` output neuron.
+- **Optimization & Loss Minimization**: Utilized the Adam optimizer ($\eta = 0.001$) and Binary Cross-Entropy Loss ($L = -\frac{1}{N} \sum [y_i \log(\hat{y}_i) + (1-y_i) \log(1-\hat{y}_i)]$).
+- **Dynamic Class Weighting & Overfitting Mitigation**: Implemented dynamic positive class weighting ($\text{pos\_weight} \approx 5.20$) to address the 84/16 class imbalance alongside an `EarlyStopping` callback (patience = 15 epochs monitoring `val_loss`), restoring optimal weights from Epoch 8 (Best Val Loss: `0.7375`).
+- **Empirical Model Performance**:
+  - **ROC-AUC Score**: **`0.8519`** (~85.2% discriminative capacity).
+  - **Attrited Recall (Sensitivity)**: **`0.7234`** (**72.34%** — successfully isolated 34 out of 47 departing employees in unseen test holdout).
+  - **Attrited Precision**: **`0.5152`** (51.52% — expected precision trade-off prioritization of recall).
+  - **Confusion Matrix ($N=295$)**: 216 True Negatives, 32 False Positives, 13 False Negatives, 34 True Positives.
+- **Strategic Trade-off & Interpretability Analysis**: Evaluated the "Black Box" interpretability trade-off of neural networks against linear models (Logistic Regression) and tree ensembles (Random Forest / XGBoost) on small structured tabular datasets.
+- **Multi-Platform Visualizations & Interactive Simulator**: Generated Jupyter Notebook (`notebook_Week5_Deep_Learning.ipynb`), updated Word executive report (`Deep_Learning_HR.docx`), and built an interactive web dashboard (`index.html`) featuring real-time neural network forward-pass risk simulation.
